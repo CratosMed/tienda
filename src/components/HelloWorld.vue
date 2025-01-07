@@ -1,21 +1,5 @@
 <template>
   <v-app>
-    <!-- Navegación lateral
-    <v-navigation-drawer app permanent>
-      <v-list>
-        <v-list-item-group>
-          <v-list-item v-for="(item, index) in menuItems" :key="index" @click="navigateTo(item.route)">
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ item.text }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer> -->
-
     <!-- Contenido principal -->
     <v-main>
       <v-container>
@@ -85,18 +69,11 @@ const categories = ref([]);
 const products = ref([]);
 const loading = ref(false);
 
-// Opciones para el menú lateral
-// const menuItems = ref([
-//   { text: "Inicio", icon: "mdi-home", route: "/" },
-//   { text: "Categorías", icon: "mdi-apps", route: "/categories" },
-//   { text: "Carrito", icon: "mdi-cart", route: "/cart" },
-//   { text: "Ofertas", icon: "mdi-sale", route: "/offers" },
-//   { text: "Mi Cuenta", icon: "mdi-account", route: "/account" },
-// ]);
+
 
 // Productos filtrados
 const filteredProducts = computed(() => {
-  let filtered = [...products.value]; // Copiar todos los productos
+  let filtered = [...products.value];
   if (search.value.trim()) {
     filtered = filtered.filter((product) =>
       product.name.toLowerCase().includes(search.value.toLowerCase())
@@ -113,12 +90,12 @@ const filteredProducts = computed(() => {
 // Variable para mantener la categoría seleccionada
 const selectedCategory = ref(null);
 
-// Función para obtener productos (modificada para obtener todos los productos inicialmente)
+// Función para obtener productos
 const fetchProducts = async () => {
   loading.value = true;
   try {
     const response = await api.get("/shop", {
-      params: { per_page: 0, search: search.value }, // Pasa search a la API
+      params: { per_page: 0, search: search.value },
     });
     products.value = response.data.data;
   } catch (error) {
@@ -173,10 +150,6 @@ const fetchCategories = async () => {
   }
 };
 
-
-
-
-
 // Función para agregar al carrito
 const addToCart = async (product_id: number, stock: number) => {
   try {
@@ -192,11 +165,11 @@ const addToCart = async (product_id: number, stock: number) => {
 
     const response = await api.post(
       "/carts",
-      params,  // Usamos URLSearchParams aquí
+      params,
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/x-www-form-urlencoded",  // Asegúrate de incluir el Content-Type correcto
+          "Content-Type": "application/x-www-form-urlencoded",
         },
       }
     );
@@ -210,7 +183,7 @@ const addToCart = async (product_id: number, stock: number) => {
   } catch (error) {
     if (error.response && error.response.status === 401) {
       alert("Sesión expirada. Por favor, inicia sesión nuevamente.");
-      // Opcionalmente, redirigir a la página de login
+
       router.push("/");
     } else {
       alert("Error al agregar el producto al carrito.");
@@ -221,7 +194,7 @@ const addToCart = async (product_id: number, stock: number) => {
 
 
 const navigateTo = (route) => {
-  router.push(route);  // Usa Vue Router para navegar
+  router.push(route);
 };
 
 

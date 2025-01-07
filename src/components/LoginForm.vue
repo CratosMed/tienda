@@ -26,7 +26,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import { useUserStore } from '../stores/userStore'; // Importar la tienda de usuario
+import { useUserStore } from '../stores/userStore';
 
 const email = ref('');
 const password = ref('');
@@ -38,7 +38,7 @@ const rules = {
 };
 
 const router = useRouter();
-const userStore = useUserStore(); // Instancia de la tienda de usuario
+const userStore = useUserStore();
 
 const handleSubmit = async () => {
     loading.value = true;
@@ -54,7 +54,6 @@ const handleSubmit = async () => {
             }
         );
 
-        console.log('Respuesta de la API:', response.data); // Para depuración
 
         alert('Inicio de sesión exitoso');
 

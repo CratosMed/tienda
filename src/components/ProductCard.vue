@@ -93,7 +93,6 @@ const defaultImage = "https://via.placeholder.com/300x300?text=Sin+imagen";
 
 .product-image {
     width: 200px;
-    /* Ajusta el tamaño según lo necesites */
     height: 200px;
     object-fit: cover;
 }
